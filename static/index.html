@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 p-4 text-white text-center">
+        <h1 class="text-4xl font-bold">Food Finder</h1>
+        <p class="mt-2 text-lg">Find delicious food items near you</p>
+    </header>
+
+    <!-- Search Form -->
+    <section class="p-6 bg-white shadow-md rounded-md m-6 max-w-lg mx-auto">
+        <form action="/search" method="post" class="flex flex-col space-y-4">
+            <input type="text" name="location" placeholder="Enter Location" class="p-2 border border-gray-300 rounded-md" required>
+            <input type="text" name="food_item" placeholder="Enter Food Item (e.g., Chicken Pizza)" class="p-2 border border-gray-300 rounded-md" required>
+            <button type="submit" class="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700">Search</button>
+        </form>
+    </section>
+
+    <!-- Swiggy Results -->
+    {% if swiggy_results %}
+        <section class="p-6">
+            <h2 class="text-2xl font-bold mb-4">🍔 Swiggy Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for item in swiggy_results %}
+                    <div class="bg-white shadow-md rounded-md p-4">
+                        <img src="{{ item['Image URL'] }}" alt="{{ item['Dish'] }}" class="w-full h-64 object-cover rounded-md mb-4">
+                        <h2 class="text-xl font-semibold mb-2">{{ item['Dish'] }}</h2>
+                        <p class="text-gray-600">{{ item['Description'] }}</p>
+                        <div class="mt-4">
+                            <span class="font-bold text-lg">₹{{ item['Discounted Price'] }}</span>
+                            <span class="line-through text-gray-500 ml-2">₹{{ item['Original Price'] }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="text-yellow-500">Rating: {{ item['Rating'] }}</span>
+                            <span class="ml-4 text-gray-500">Delivery: {{ item['Delivery Time'] }}</span>
+                        </div>
+                        <a href="{{ item['Restaurant URL'] }}" target="_blank" class="text-blue-600 mt-4 block hover:underline">View Restaurant</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    <!-- Zomato Results -->
+    {% if zomato_results %}
+        <section class="p-6">
+            <h2 class="text-2xl font-bold mb-4">🍕 Zomato Results</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for item in zomato_results %}
+                    <div class="bg-white shadow-md rounded-md p-4">
+                        <img src="{{ item['Image URL'] }}" alt="{{ item['Dish'] }}" class="w-full h-64 object-cover rounded-md mb-4">
+                        <h2 class="text-xl font-semibold mb-2">{{ item['Dish'] }}</h2>
+                        <p class="text-gray-600">{{ item['Description'] }}</p>
+                        <div class="mt-4">
+                            <span class="font-bold text-lg">₹{{ item['Discounted Price'] }}</span>
+                            <span class="line-through text-gray-500 ml-2">₹{{ item['Original Price'] }}</span>
+                        </div>
+                        <div class="mt-2">
+                            <span class="text-yellow-500">Rating: {{ item['Rating'] }}</span>
+                            <span class="ml-4 text-gray-500">Delivery: {{ item['Delivery Time'] }}</span>
+                        </div>
+                        <a href="{{ item['Restaurant URL'] }}" target="_blank" class="text-blue-600 mt-4 block hover:underline">View Restaurant</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+</body>
+</html>

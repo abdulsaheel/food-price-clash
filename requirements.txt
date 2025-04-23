@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+jinja2
+selenium
+beautifulsoup4
+requests
+pandas
+playwright
